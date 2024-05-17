@@ -6,14 +6,20 @@ import n1exercici1.utils.Constants;
 public class StockAgency implements IAgency {
 
 	private String name;
-	private int value;
+	private int newValue;
+	private int currentValue;
 	
-	public StockAgency(String name, int value) {
+	public StockAgency() {
 		super();
-		this.name = name;
-		this.value = value;
 	}
 	
+	public StockAgency(String name, int currentValue) {
+		super();
+		this.name = name;
+		this.currentValue = currentValue;
+		this.newValue = currentValue;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -22,19 +28,41 @@ public class StockAgency implements IAgency {
 		this.name = name;
 	}
 
-	public int getValue() {
-		return value;
+	public int getNewValue() {
+		return newValue;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setNewValue(int newValue) {
+		this.newValue = newValue;
+	}
+
+	public int getCurrentValue() {
+		return currentValue;
+	}
+
+	public void setCurrentValue(int currentValue) {
+		this.currentValue = currentValue;
 	}
 
 	@Override
 	public void update(Object object) {
 		
-		this.setValue((int)object);
-		System.out.println(this.name + Constants.Messages.CHANGED + this.value);
+		this.currentValue = this.newValue;
+		this.setNewValue((int)object);
 		
+		String message = "";
+		
+		if(this.currentValue > this.newValue) {
+			message = this.name + Constants.Messages.CHANGED + this.newValue 
+					+ Constants.Messages.DOWN;
+		}else if(currentValue < this.newValue) {
+			message = this.name + Constants.Messages.CHANGED + this.newValue 
+					+ Constants.Messages.UP;
+		}else {
+			message = this.name + Constants.Messages.CHANGED + this.newValue 
+					+ Constants.Messages.SAME;
+		}
+		System.out.println(message);
+			
 	}
 }
